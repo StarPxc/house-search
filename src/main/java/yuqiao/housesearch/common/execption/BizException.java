@@ -1,7 +1,7 @@
 package yuqiao.housesearch.common.execption;
 
 
-import yuqiao.housesearch.common.enums.ResultEnum;
+import yuqiao.housesearch.common.enums.ErrorCode;
 
 /**
  * @author Ethanp
@@ -19,8 +19,8 @@ public class BizException extends RuntimeException {
         this.code = code;
     }
 
-    public BizException(ResultEnum resultEnum) {
-        super(resultEnum.getMsg());
-        this.code = resultEnum.getCode();
+    public BizException(ErrorCode errorCode) {
+        super(errorCode.getMsg());
+        this.code = errorCode.getCode();
     }
 }

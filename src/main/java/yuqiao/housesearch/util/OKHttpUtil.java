@@ -1,18 +1,14 @@
 package yuqiao.housesearch.util;
 
 import com.alibaba.fastjson.JSONObject;
-import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
-import okio.BufferedSink;
-import org.apache.commons.collections4.MapUtils;
-import org.apache.http.client.methods.RequestBuilder;
-import org.yaml.snakeyaml.util.UriEncoder;
-import yuqiao.housesearch.common.constants.Constants;
+import org.apache.commons.lang3.StringUtils;
+import yuqiao.housesearch.common.enums.ErrorCode;
+import yuqiao.housesearch.common.execption.BizException;
+import yuqiao.housesearch.config.SSLSocketClient;
 
 import java.io.IOException;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -40,6 +36,8 @@ public class OKHttpUtil {
                     return cookies != null ? cookies : new ArrayList<>();
                 }
             })
+            .sslSocketFactory(SSLSocketClient.getSSLSocketFactory())
+            .hostnameVerifier(SSLSocketClient.getHostnameVerifier())
             .build();
 
     /**
@@ -50,6 +48,9 @@ public class OKHttpUtil {
      * @return
      */
     public JSONObject get(String url, Map<String, String> headersMap) {
+        if (StringUtils.isBlank(url)) {
+            throw new BizException(ErrorCode.PROPERTY_NULL_ERROR);
+        }
         Request.Builder requestBuilder = new Request.Builder()
                 .get()
                 .url(url);
@@ -68,6 +69,9 @@ public class OKHttpUtil {
      * @return
      */
     public String getHtml(String url, Map<String, String> headersMap) {
+        if (StringUtils.isBlank(url)) {
+            throw new BizException(ErrorCode.PROPERTY_NULL_ERROR);
+        }
         Request.Builder requestBuilder = new Request.Builder()
                 .get()
                 .url(url);
@@ -113,6 +117,9 @@ public class OKHttpUtil {
      * @return
      */
     public JSONObject post(String url, Map<String, String> headersMap,Map<String, String> dataMap) {
+        if (StringUtils.isBlank(url)) {
+            throw new BizException(ErrorCode.PROPERTY_NULL_ERROR);
+        }
         Request.Builder requestBuilder = new Request.Builder()
                 .url(url);
         if (headersMap != null) {

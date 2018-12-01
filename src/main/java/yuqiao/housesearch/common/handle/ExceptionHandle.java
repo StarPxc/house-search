@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartException;
-import yuqiao.housesearch.common.enums.ResultEnum;
+import yuqiao.housesearch.common.enums.ErrorCode;
 import yuqiao.housesearch.common.execption.BizException;
 import yuqiao.housesearch.common.resp.ApiResult;
 import yuqiao.housesearch.util.RestUtil;
@@ -28,10 +28,10 @@ public class ExceptionHandle {
             log.error(exception.getMessage());
             return RestUtil.error(exception.getCode(), exception.getMessage());
         } else if (e instanceof MultipartException) {
-            return RestUtil.error(ResultEnum.FILE_TOO_BIG.getCode(), ResultEnum.FILE_TOO_BIG.getMsg());
+            return RestUtil.error(ErrorCode.FILE_TOO_BIG.getCode(), ErrorCode.FILE_TOO_BIG.getMsg());
         } else {
             log.error("【系统异常】", e);
-            return RestUtil.error(ResultEnum.UNKONW_ERROR.getCode(), ResultEnum.UNKONW_ERROR.getMsg());
+            return RestUtil.error(ErrorCode.UNKONW_ERROR.getCode(), ErrorCode.UNKONW_ERROR.getMsg());
         }
 
     }
