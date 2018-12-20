@@ -55,7 +55,7 @@ public class MyBatisPlusCodeGenerator {
     static {
         Properties p = new Properties();
         try {
-            p.load(new FileInputStream("src/main/resources/mybatis-plus.properties"));
+            p.load(new FileInputStream("/Users/pxc/Documents/java/house-search/search/src/main/resources/mybatis-plus.properties"));
             PARENT_PACKAGE = p.getProperty("parent.package");
             PARENT_DIR = p.getProperty("parent.dir");
             MODEL_NAME = p.getProperty("model.name");

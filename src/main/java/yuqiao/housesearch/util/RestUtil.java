@@ -1,6 +1,7 @@
 package yuqiao.housesearch.util;
 
 
+import yuqiao.housesearch.common.enums.ErrorCode;
 import yuqiao.housesearch.common.resp.ApiResult;
 
 /**
@@ -27,6 +28,12 @@ public class RestUtil {
         ApiResult apiResult = new ApiResult();
         apiResult.setCode(code);
         apiResult.setMsg(msg);
+        return apiResult;
+    }
+    public static ApiResult error(ErrorCode codeEnum) {
+        ApiResult apiResult = new ApiResult();
+        apiResult.setCode(codeEnum.getCode());
+        apiResult.setMsg(codeEnum.getMsg());
         return apiResult;
     }
 

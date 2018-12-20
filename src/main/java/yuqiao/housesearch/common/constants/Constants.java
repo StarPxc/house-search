@@ -10,4 +10,5 @@ public class Constants {
      * 蛋壳公寓域名
      */
     public static final String DNAKE_URL = "https://www.dankegongyu.com/";
+
 }

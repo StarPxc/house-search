@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2018-12-01
  */
 @RestController
-@RequestMapping("/house/house")
+@RequestMapping("/house")
 public class HouseController {
 
 }
