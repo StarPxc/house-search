@@ -1,5 +1,6 @@
 package yuqiao.housesearch.house.service.impl;
 
+import org.springframework.context.annotation.Primary;
 import yuqiao.housesearch.house.entity.House;
 import yuqiao.housesearch.house.mapper.HouseMapper;
 import yuqiao.housesearch.house.service.IHouseService;
@@ -15,6 +16,6 @@ import org.springframework.stereotype.Service;
  * @since 2018-12-01
  */
 @Service
+@Primary
 public class HouseServiceImpl extends ServiceImpl<HouseMapper, House> implements IHouseService {
-
 }

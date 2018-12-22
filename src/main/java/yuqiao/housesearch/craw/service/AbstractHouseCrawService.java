@@ -1,5 +1,6 @@
 package yuqiao.housesearch.craw.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -29,11 +30,14 @@ public abstract class AbstractHouseCrawService implements IHouseCrawService {
     @Override
     public void insertIntoMysql(House house) {
         try {
-            if (!isExist(house)) {
+            House houseDb = houseMapper.selectOne(new QueryWrapper<House>().eq("number", house.getNumber()));
+            if (houseDb == null) {
                 houseMapper.insert(house);
                 log.info("mysql插入 {} 条数据：{}", sum.addAndGet(1), house);
             } else {
-                log.info("数据已存在：{}", house);
+                house.setId(houseDb.getId());
+                houseMapper.updateById(house);
+                log.info("数据已存在更新数据：{}", house);
             }
         } catch (Exception e) {
             log.error("insert error ：{}", e);

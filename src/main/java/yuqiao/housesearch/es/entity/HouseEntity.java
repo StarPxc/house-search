@@ -1,33 +1,18 @@
-package yuqiao.housesearch.house.entity;
+package yuqiao.housesearch.es.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
-import java.io.Serializable;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
+
+import java.time.LocalDateTime;
 
 /**
- * <p>
- * 房屋信息表
- * </p>
- *
  * @author 浦希成
- * @since 2018-12-01
+ * 2018-12-21
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
-public class House implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * house唯一标识
-     */
-    @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+@Document(indexName = "house",type = "house",shards = 3)
+public class HouseEntity {
 
     /**
      * 编号
@@ -133,11 +118,6 @@ public class House implements Serializable {
      * 来源
      */
     private Integer origin;
-
-    /**
-     * 爬取地址
-     */
-    private String url;
 
 
 }

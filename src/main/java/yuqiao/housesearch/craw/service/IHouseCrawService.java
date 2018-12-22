@@ -25,12 +25,6 @@ public interface IHouseCrawService {
      */
     House getDetailInfo(String url);
 
-    /**
-     * 判断信息是否已经存在
-     * @param house House
-     * @return true or false
-     */
-    boolean isExist(House house);
 
     /**
      * 启动爬虫

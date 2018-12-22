@@ -15,10 +15,20 @@ import yuqiao.housesearch.craw.service.IHouseCrawService;
 public class CrawController {
     @Autowired
     @Qualifier("danKeHouseCrawServiceImpl")
-    private IHouseCrawService houseCrawService;
-    @RequestMapping("/test")
-    public String test(){
-        houseCrawService.start();
+    private IHouseCrawService danKeHouseCrawService;
+    @Autowired
+    @Qualifier("ziRuHouseCrawServiceImpl")
+    private IHouseCrawService ziRuHouseCrawService;
+
+    @RequestMapping("/danke")
+    public String danke() {
+        danKeHouseCrawService.start();
+        return "";
+    }
+
+    @RequestMapping("/ziru")
+    public String ziru() {
+        ziRuHouseCrawService.start();
         return "";
     }
 }
