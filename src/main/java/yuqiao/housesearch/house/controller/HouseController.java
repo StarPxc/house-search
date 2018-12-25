@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 import yuqiao.housesearch.es.entity.HouseEntity;
+import yuqiao.housesearch.es.repository.HouseEntityRepository;
 import yuqiao.housesearch.house.entity.House;
 import yuqiao.housesearch.house.service.IHouseService;
 
@@ -21,15 +22,5 @@ import yuqiao.housesearch.house.service.IHouseService;
 @RestController
 @RequestMapping("/house")
 public class HouseController {
-    @Autowired
-    private IHouseService iHouseService;
-    @RequestMapping("/test")
-    public HouseEntity test(){
-//        House housedb=iHouseService.getById(100);
-//        HouseEntity house=new HouseEntity();
-//        BeanUtils.copyProperties(housedb,house);
-//        houseEntityRepository.save(house);
-//        return house;
-        return null;
-    }
+
 }

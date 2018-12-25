@@ -10,3 +10,6 @@ spring:
         enabled: true
       cluster-name: yuqiao
       cluster-nodes: 132.232.75.97:9300
+qq:
+  appid: 101512317
+  appkey: b8a753e58978a50d269120ba163b9047

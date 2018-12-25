@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import net.sourceforge.tess4j.Tesseract;
-import net.sourceforge.tess4j.TesseractException;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -24,6 +23,7 @@ import yuqiao.housesearch.util.StringUtil;
 import java.io.File;
 import java.io.InputStream;
 
+import java.util.Date;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -127,8 +127,17 @@ public class ZiRuHouseCrawServiceImpl extends AbstractHouseCrawService {
 
         //标签
         String tag = StringUtils.join(doc.select("body > div.area.clearfix > div.room_detail_right > p").text().split(" "), ",");
-
+        String pattern = "//pic.ziroom.com/house_images/(.*?).(jpg|JPG)";
+        Pattern r = Pattern.compile(pattern);
+        Matcher m = r.matcher(html);
+        StringBuilder imgUrls=new StringBuilder();
+        int i=0;
+        while (m.find()&&i<2) {
+            i++;
+            imgUrls.append("http:"+m.group()+",");
+        }
         House house = new House();
+        house.setCrawTime(new Date());
         house.setTitle(title);
         house.setNumber(number);
         house.setPrice(Integer.parseInt(price));
@@ -140,6 +149,7 @@ public class ZiRuHouseCrawServiceImpl extends AbstractHouseCrawService {
         house.setDirection(direction);
         house.setSubway(subway);
         house.setTag(tag);
+        house.setImgUrls(imgUrls.toString());
         house.setStatus(HouseStatusEnum.NORMAL.getCode());
         house.setCommunity(community);
         house.setStreet(street);

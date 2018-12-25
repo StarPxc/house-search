@@ -1,35 +1,16 @@
-package yuqiao.housesearch.house.entity;
-
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
-import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
+package yuqiao.housesearch.vo;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
+
+import java.util.Date;
 
 /**
- * <p>
- * 房屋信息表
- * </p>
- *
  * @author 浦希成
- * @since 2018-12-01
+ * 2018-12-24
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
-public class House implements Serializable {
+public class HouseEntityVO {
 
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * house唯一标识
-     */
-    @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     /**
@@ -45,12 +26,12 @@ public class House implements Serializable {
     /**
      * 价格
      */
-    private Integer price;
+    private String price;
 
     /**
      * 面积
      */
-    private Float area;
+    private String area;
 
     /**
      * 户型
@@ -82,25 +63,12 @@ public class House implements Serializable {
      */
     private Integer status;
 
-    /**
-     * 创建时间
-     */
-    private LocalDateTime createTime;
-
-    /**
-     * 最近数据更新时间
-     */
-    private LocalDateTime lastUpdateTime;
 
     /**
      * 最近数据更新时间
      */
     private Date crawTime;
 
-    /**
-     * 省份
-     */
-    private String province;
 
     /**
      * 城市
@@ -142,15 +110,17 @@ public class House implements Serializable {
      */
     private Integer origin;
 
-    /**
-     * 爬取地址
-     */
-    private String url;
 
     /**
      * 图片地址
      */
     private String imgUrls;
 
+    public String getPrice() {
+        return price+"元";
+    }
 
+    public String getArea() {
+        return area+"㎡";
+    }
 }

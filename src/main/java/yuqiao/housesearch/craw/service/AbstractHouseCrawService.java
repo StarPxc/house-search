@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import yuqiao.housesearch.es.repository.HouseEntityRepository;
 import yuqiao.housesearch.house.entity.House;
 import yuqiao.housesearch.house.mapper.HouseMapper;
 
@@ -21,6 +22,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 public abstract class AbstractHouseCrawService implements IHouseCrawService {
 
     protected HouseMapper houseMapper;
+
+    protected HouseEntityRepository houseEntityRepository;
 
     /**
      * 成功插入的总数

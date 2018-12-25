@@ -48,8 +48,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/login",
                         "/login/authentication",
-                        "/img/*",
-                        "/craw/*")
+                        "/img/**",
+                        "/craw/**",
+                        "/**",
+
+                        "/swagger-ui.html",
+                        "/webjars/**",
+                        "/v2/**",
+                        "/swagger-resources/**",
+                "/**")
+
                 .permitAll()
                 .anyRequest()
                 .authenticated()

@@ -5,17 +5,19 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import yuqiao.housesearch.common.constants.Constants;
 import yuqiao.housesearch.common.enums.OriginEnun;
 import yuqiao.housesearch.craw.service.AbstractHouseCrawService;
 import yuqiao.housesearch.craw.util.OKHttpUtil;
+import yuqiao.housesearch.es.entity.HouseEntity;
+import yuqiao.housesearch.es.repository.HouseEntityRepository;
 import yuqiao.housesearch.house.entity.House;
 import yuqiao.housesearch.house.mapper.HouseMapper;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,8 +34,9 @@ public class DanKeHouseCrawServiceImpl extends AbstractHouseCrawService {
     private String[] cities = {"bj", "sz", "sh", "hz", "tj", "wh", "nj", "gz", "cd"};
 
     @Autowired
-    public DanKeHouseCrawServiceImpl(HouseMapper houseMapper) {
+    public DanKeHouseCrawServiceImpl(HouseMapper houseMapper, HouseEntityRepository houseEntityRepository) {
         super.houseMapper = houseMapper;
+        super.houseEntityRepository=houseEntityRepository;
     }
 
     @Override
@@ -58,7 +61,12 @@ public class DanKeHouseCrawServiceImpl extends AbstractHouseCrawService {
             while (m.find()) {
                 String detailUrl = m.group();
                 House house = getDetailInfo(detailUrl);
+                //存入数据库
                 insertIntoMysql(house);
+                //存入es
+                HouseEntity entity=new HouseEntity();
+                BeanUtils.copyProperties(house,entity);
+                houseEntityRepository.save(entity);
 
             }
         }
@@ -123,7 +131,17 @@ public class DanKeHouseCrawServiceImpl extends AbstractHouseCrawService {
         //小区
         String community = doc.select("body > div.website-main > div.wrapper > div.intro a:nth-child(5)").text().split("租房")[0];
 
+        String pattern = "https://public.danke.com.cn/public-(.*?).jpg";
+        Pattern r = Pattern.compile(pattern);
+        Matcher m = r.matcher(html);
+        StringBuilder imgUrls=new StringBuilder();
+        int i=0;
+        while (m.find()&&i<2) {
+            i++;
+            imgUrls.append(m.group());
+        }
         House house = new House();
+        house.setCrawTime(new Date());
         house.setDistrict(district);
         house.setStreet(street);
         house.setCommunity(community);
@@ -141,6 +159,7 @@ public class DanKeHouseCrawServiceImpl extends AbstractHouseCrawService {
         house.setTag(tags.toString());
         house.setOrigin(OriginEnun.DANKE.getCode());
         house.setUrl(detailUrl);
+        house.setImgUrls(imgUrls.toString());
         return house;
     }
 

@@ -1,6 +1,8 @@
 package yuqiao.housesearch.es.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 
@@ -11,9 +13,12 @@ import java.time.LocalDateTime;
  * 2018-12-21
  */
 @Data
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
 @Document(indexName = "house",type = "house",shards = 3)
 public class HouseEntity {
-
+    @Id
+    private Integer id;
     /**
      * 编号
      */
