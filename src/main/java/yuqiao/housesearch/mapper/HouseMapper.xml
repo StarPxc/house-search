@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="yuqiao.housesearch.mapper.HouseMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="yuqiao.housesearch.entity.House">
+        <id column="id" property="id" />
+        <result column="number" property="number" />
+        <result column="title" property="title" />
+        <result column="price" property="price" />
+        <result column="area" property="area" />
+        <result column="type" property="type" />
+        <result column="floor" property="floor" />
+        <result column="total_floor" property="totalFloor" />
+        <result column="watch_times" property="watchTimes" />
+        <result column="build_year" property="buildYear" />
+        <result column="status" property="status" />
+        <result column="create_time" property="createTime" />
+        <result column="last_update_time" property="lastUpdateTime" />
+        <result column="province" property="province" />
+        <result column="city" property="city" />
+        <result column="district" property="district" />
+        <result column="street" property="street" />
+        <result column="direction" property="direction" />
+        <result column="subway" property="subway" />
+        <result column="parlour" property="parlour" />
+        <result column="community" property="community" />
+        <result column="tag" property="tag" />
+        <result column="origin" property="origin" />
+        <result column="craw_time" property="crawTime" />
+        <result column="url" property="url" />
+        <result column="img_urls" property="imgUrls" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, number, title, price, area, type, floor, total_floor, watch_times, build_year, status, create_time, last_update_time, province, city, district, street, direction, subway, parlour, community, tag, origin, craw_time, url, img_urls
+    </sql>
+    <select id="selectAll" resultType="yuqiao.housesearch.entity.House">
+        select * from house LIMIT #{start},#{size}
+    </select>
+
+</mapper>

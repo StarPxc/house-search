@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartException;
 import yuqiao.housesearch.common.enums.ErrorCode;
 import yuqiao.housesearch.common.execption.BizException;
 import yuqiao.housesearch.common.resp.ApiResult;
-import yuqiao.housesearch.util.RestUtil;
+import yuqiao.housesearch.common.util.RestUtil;
 
 /**
  * @author Ethanp

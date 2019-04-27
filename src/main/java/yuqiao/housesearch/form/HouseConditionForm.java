@@ -8,7 +8,7 @@ import lombok.Data;
  * 2018-12-24
  */
 @Data
-public class HouseConditionForm {
+public class HouseConditionForm extends BaseForm{
 
     /**
      * 标题
@@ -68,14 +68,6 @@ public class HouseConditionForm {
      */
     private String origin;
 
-    /**
-     * 页码
-     */
-    private Integer pageNum=1;
 
-    /**
-     * 每页显示的数目
-     */
-    private Integer pageSize=10;
 
 }

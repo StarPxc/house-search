@@ -13,3 +13,5 @@ spring:
 qq:
   appid: 101512317
   appkey: b8a753e58978a50d269120ba163b9047
+mybatis:
+  mapper-locations: classpath:yuqiao/housesearch/mapper/**.xml

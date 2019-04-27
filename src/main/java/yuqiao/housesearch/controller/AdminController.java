@@ -1,0 +1,24 @@
+package yuqiao.housesearch.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import yuqiao.housesearch.service.EsAdminService;
+
+/**
+ * @author 浦希成
+ * 2018-12-22
+ */
+@RequestMapping("es/admin")
+@RestController
+public class AdminController {
+    @Autowired
+    private EsAdminService esAdminService;
+
+    @GetMapping("/synchronousata")
+    public Integer synchronousData(){
+
+        return esAdminService.synchronousata();
+    }
+}
