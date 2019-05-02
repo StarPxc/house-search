@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <!-- 引入样式 -->
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <!-- import Vue before Element -->
+  <script src="vue.js"></script>
+  <!-- 引入组件库 -->
+  <script src="element.js"></script>
+  <style>
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <el-container>
+      <el-header>
+        <span>房屋搜索</span>
+        <el-form :inline="true" class="demo-form-inline" style="float: right;">
+          <el-form-item label="条件查询">
+            <el-input v-model="queryValue" placeholder="编号，标题，城市"></el-input>
+          </el-form-item>
+
+          <el-form-item>
+            <el-button type="primary" @click="search">查询</el-button>
+          </el-form-item>
+        </el-form>
+      </el-header>
+      <el-divider></el-divider>
+      <el-main>
+        <el-table :data="houseList" style="width: 100%" :default-sort="{prop: 'price', order: 'descending'}">
+          <el-table-column prop="number" label="编号">
+          </el-table-column>
+          <el-table-column prop="title" label="标题">
+          </el-table-column>
+          <el-table-column prop="price" sortable label="价格">
+          </el-table-column>
+          <el-table-column prop="area" sortable label="面积">
+          </el-table-column>
+          <el-table-column prop="type" label="户型">
+          </el-table-column>
+          <el-table-column prop="floor" label="楼层">
+          </el-table-column>
+          <el-table-column prop="totalFloor" sortable label="总楼层">
+          </el-table-column>
+          <el-table-column prop="city" label="城市">
+          </el-table-column>
+          <el-table-column >
+              <template slot-scope="scope" prop="url" label="主要链接">
+                  <el-link type="primary" :href="scope.row.url" target="_blanck">主要链接</el-link>
+                </template>
+          </el-table-column>
+
+        </el-table>
+        <el-pagination @current-change="handleCurrentChange" @size-change="handleSizeChange" :hide-on-single-page="true"
+          :current-page="pageNum" :page-sizes="[5, 10, 20, 100]" :page-size="pageSize"
+          layout="total, sizes, prev, pager, next, jumper" :total="total">
+        </el-pagination>
+        </el-m ain>
+    </el-container>
+  </div>
+</body>
+<script>
+  new Vue({
+    el: '#app',
+    data: {
+      houseList: [],
+      pageNum: 1,
+      pageSize: 10,
+      total: 0,
+      queryValue: ''
+    },
+    methods: {
+      search() {
+        this.pageNum = 1
+        this.pageSize = 10
+        var _this = this
+        this.getData('http://localhost:8080/house/searchValue', {
+          pageNum: this.pageNum,
+          pageSize: this.pageSize,
+          queryValue: this.queryValue
+        })
+      },
+      handleCurrentChange(pageNum) {
+        let url = "";
+        let data = {
+          pageNum: this.pageNum,
+          pageSize: this.pageSize
+        }
+        if (this.queryValue) {
+          url = 'http://localhost:8080/house/searchValue';
+          data.queryValue = this.queryValue
+        } else {
+          url = 'http://localhost:8080/house/search';
+        }
+        this.pageNum = pageNum;
+        this.getData(url, data)
+
+      },
+      handleSizeChange(pageSize) {
+        let url = "";
+        let data = {
+          pageNum: this.pageNum,
+          pageSize: this.pageSize
+        }
+        if (this.queryValue) {
+          url = 'http://localhost:8080/house/searchValue';
+          data.queryValue = this.queryValue
+        } else {
+          url = 'http://localhost:8080/house/search';
+        }
+        this.pageSize = pageSize;
+        this.getData(url, data)
+      },
+      getData(url, body) {
+        var _this = this
+        fetch(url, {
+          headers: {
+            "Content-Type": "application/json"
+          },
+          method: 'POST',
+          body: JSON.stringify(body)
+        }).then(res => res.json())
+          .then(function (res) {
+            _this.houseList = res.data.records
+            _this.total = res.data.total
+          }).catch(function (e) {
+            console.log('error: ' + e.toString());
+          })
+      }
+    },
+    mounted() {
+      this.getData('http://localhost:8080/house/search', {
+        pageNum: this.pageNum,
+        pageSize: this.pageSize
+      })
+    }
+  })
+</script>
+
+</html>
